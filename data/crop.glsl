@@ -1,25 +1,27 @@
 // https://forum.processing.org/one/topic/fast-cropping-of-a-gltexture.html
 
+uniform vec3 iResolution;
+uniform vec2 imgRes;
 uniform sampler2D tex0;
 uniform vec2 offset;
-uniform vec2 tlCorner;
 uniform vec2 brCorner;
 
-void main(void) {
+float map(float s, float a1, float a2, float b1, float b2) {
+    return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
+}
+
+void main() {
     // The s coordinate of the incoming pixel. We map to the
     // range of the cropped region.
-    float s = gl_TexCoord[0].s; 
-    float srange = (brCorner.x - tlCorner.x) * offset.s;
-    float s0 = tlCorner.x * offset.s;
-    float sc = srange * s + s0;
+    vec2 br = vec2(brCorner.x * ((imgRes.x/iResolution.x)/2.0), brCorner.y).xy / imgRes.xy;
+    vec2 of = offset.xy / imgRes.xy;
+
+    float s = map(gl_FragCoord.x, 0.0, imgRes.x, of.x, of.x + br.x); 
  
     // Same for the t coordinate. 
-    float t = gl_TexCoord[0].t; 
-    float trange = (brCorner.y - tlCorner.y) * offset.t;
-    float t0 = tlCorner.y * offset.t;
-    float tc = trange * t + t0;
+    float t = map(gl_FragCoord.y, 0.0, imgRes.y, of.y, of.y + br.y); 
 
     // We sample the tex0 texture with texture coordinates
-    // contained int the crop area. 
-    gl_FragColor = texture2D(tex0, vec2(sc, tc));
+    // contained in the crop area. 
+    gl_FragColor = texture2D(tex0, vec2(s,t));
 } 
