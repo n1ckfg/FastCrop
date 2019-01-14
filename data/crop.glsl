@@ -19,7 +19,7 @@ void main() {
     float s = map(gl_FragCoord.x, 0.0, imgRes.x, of.x, of.x + br.x); 
  
     // Same for the t coordinate. 
-    float t = map(gl_FragCoord.y, 0.0, imgRes.y, of.y, of.y + br.y); 
+    float t = map(gl_FragCoord.y, 0.0, imgRes.y, of.y + br.y, of.y); 
 
     // We sample the tex0 texture with texture coordinates
     // contained in the crop area. 

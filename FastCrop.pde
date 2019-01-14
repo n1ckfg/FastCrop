@@ -11,7 +11,7 @@ void setup() {
   shader_crop.set("iResolution", float(width), float(height), 1.0);
   shader_crop.set("imgRes", float(img.width), float(img.height));
   shader_crop.set("offset", 0.0, 0.0);
-  shader_crop.set("brCorner", 960.0, 540.0);
+  shader_crop.set("brCorner", 640.0, 540.0);
 }
 
 void draw() {
