@@ -3,7 +3,7 @@ PShader shader_crop;
 
 void setup() {
   size(640, 540, P2D);
-  pixelDensity(2);
+  pixelDensity(displayDensity());
   img = loadImage("test.jpg");
   shader_crop = loadShader("crop.glsl");
   
@@ -15,6 +15,8 @@ void setup() {
 }
 
 void draw() {
-
+  shader_crop.set("offset", map(mouseX, 0, width, 0, img.width - width), map(mouseY, 0, height, 0, img.height - height));
   filter(shader_crop);
+  
+  surface.setTitle("" + frameRate);
 }
