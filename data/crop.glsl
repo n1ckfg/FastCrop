@@ -9,7 +9,7 @@ float map(float s, float a1, float a2, float b1, float b2) {
 }
 
 void main() {
-    vec2 br = vec2(brCorner.x * ((imgRes.x/iResolution.x)/2.0), brCorner.y).xy / imgRes.xy;
+    vec2 br = vec2(brCorner.x * ((imgRes.x/iResolution.x)/2.0), brCorner.y * ((imgRes.y/iResolution.y)/2.0)).xy / imgRes.xy;
     vec2 of = offset.xy / imgRes.xy;
 
     float s = map(gl_FragCoord.x, 0.0, imgRes.x, of.x, of.x + br.x); 
